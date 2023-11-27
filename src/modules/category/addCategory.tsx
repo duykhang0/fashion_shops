@@ -15,7 +15,8 @@ import {
 } from "@mui/material";
 //
 import { CustomInput } from "@/customForm";
-
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addCategogy } from "./categorySlice";
 const rulesCategoryPerent = {
   required: "Categorty does not empty !",
   minLength: {
@@ -25,9 +26,12 @@ const rulesCategoryPerent = {
 };
 const AddCategory = () => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+
   const { handleSubmit, control } = useForm();
   const onSubmit = (data: any) => {
-    console.log(data);
+    dispatch(addCategogy(data));
   };
   return (
     <>
