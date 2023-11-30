@@ -3,7 +3,7 @@ import { Button, TextField } from "@mui/material";
 interface IInputProps {
   name: string;
   label: string;
-  control: ReturnType<typeof useForm>["control"];
+  control: any;
   placeholder?: string;
   rules?: {};
 }
@@ -15,7 +15,7 @@ const CustomInput = (props: IInputProps) => {
       control={control}
       defaultValue=""
       rules={rules ? rules : {}}
-      render={({ field: { onChange }, fieldState: { error } }) => {
+      render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
           <>
             <TextField
@@ -24,6 +24,7 @@ const CustomInput = (props: IInputProps) => {
               placeholder={placeholder}
               className="w-full mt-3"
               onChange={onChange}
+              value={value}
             />
             {error ? (
               <p className="text-red-500 text-sm ml-3">{error.message}</p>

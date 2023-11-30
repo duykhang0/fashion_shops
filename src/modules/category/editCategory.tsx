@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, useFormState } from "react-hook-form";
-import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 
 import {
@@ -18,7 +18,6 @@ import { CustomInput } from "@/customForm";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addNewCategogy } from "./categorySlice";
 import { ICategories } from "./type";
-import { error } from "console";
 import DialogMessage from "@/components/dashboard/dialogMessage";
 const rulesCategoryPerent = {
   required: "Categorty does not empty !",
@@ -28,10 +27,12 @@ const rulesCategoryPerent = {
   },
 };
 
-const AddCategory = () => {
+interface IEditCategory {
+  data: ICategories;
+}
+const EditCategory = ({ data }: IEditCategory) => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [openDialogMessage, setOpenDialogMessage] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
 
   // react hook form
@@ -40,12 +41,11 @@ const AddCategory = () => {
     handleSubmit,
     control,
     reset,
-    resetField,
     getValues,
     formState: { errors },
     clearErrors,
   } = useForm({
-    defaultValues: { name_category: "" },
+    defaultValues: data,
   });
 
   // check form value
@@ -79,19 +79,23 @@ const AddCategory = () => {
   };
   // handle submit
   const onSubmit = async (data: any) => {
-    dispatch(addNewCategogy(data));
+    // dispatch(addNewCategogy(data));
+    console.log(data);
     reset();
+  };
+  // handle onclick
+  const handleOnclick = () => {
+    setOpenDrawer(true);
   };
   return (
     <>
-      <Button
-        variant="contained"
-        startIcon={<AddIcon />}
-        className="bg-green-600 hover:bg-green-700"
-        onClick={(event) => toggleDrawer(event, true)}
+      <IconButton
+        aria-label="edit"
+        className="text-yellow-500"
+        onClick={() => handleOnclick()}
       >
-        ADD
-      </Button>
+        <EditIcon />
+      </IconButton>
 
       <Drawer
         anchor="right"
@@ -123,7 +127,7 @@ const AddCategory = () => {
           />
           <Divider className="border-y border-b-neutral-400" />
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} id="form-add-category">
+            <form onSubmit={handleSubmit(onSubmit)} id="form-update-category">
               <CustomInput
                 control={control}
                 name="name_category"
@@ -142,9 +146,9 @@ const AddCategory = () => {
                   variant="contained"
                   className="bg-green-600 hover:bg-green-700 mx-auto w-28 mt-10"
                   type="submit"
-                  form="form-add-category"
+                  form="form-update-category"
                 >
-                  ADD
+                  Save
                 </Button>
               </Stack>
             </form>
@@ -160,4 +164,4 @@ const AddCategory = () => {
     </>
   );
 };
-export default AddCategory;
+export default EditCategory;

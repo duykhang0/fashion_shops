@@ -2,8 +2,15 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import HeaderCategories from "@/modules/category/headerCategories";
-import TableProduct from "@/modules/category/tableCategories";
+import TableCategory from "@/modules/category/tableCategories";
+
+import { useAppDispatch } from "@/redux/hooks";
+import { fetchCategories } from "@/modules/category/categorySlice";
 const CategoryPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
   return (
     <>
       <Grid container className="mt-10 px-4 ">
@@ -11,7 +18,7 @@ const CategoryPage: React.FC = () => {
           <HeaderCategories />
         </Grid>
         <Grid item xs={12} className="table_category">
-          <TableProduct />
+          <TableCategory />
         </Grid>
       </Grid>
     </>
