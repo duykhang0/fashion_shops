@@ -37,6 +37,11 @@ const categorySlice = createSlice({
                 const indexCategory = state.categories.findIndex((category) => category.id_category === id_category)
                 state.categories[indexCategory] = actions.payload;  
             }) 
+            .addCase(deleteCategoryById.fulfilled,(state,actions) => {
+                const id_category = actions.payload.id_category;
+                const indexCategory = state.categories.findIndex(category => category.id_category === id_category)
+                state.categories.splice(indexCategory,1);
+            }) 
             
         }
 })  
@@ -84,6 +89,24 @@ export const updateCategory = createAsyncThunk('category/updateCategoryById', as
         const data = await response.json();
         return data;
         
+    }catch(error){
+        console.log("Error submitting data",error);
+        throw error;
+    }
+})
+
+//delete category thunk
+export const deleteCategoryById = createAsyncThunk('category/deleteCategoryById', async (dataDelete: ICategories) => {
+    const {id_category} = dataDelete;
+    try{
+
+        const response = await fetch(`http://localhost:8080/fakestoreapi.com/category/${id_category}`,{
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(dataDelete)
+        })
+        const data = await response.json();
+        return data;
     }catch(error){
         console.log("Error submitting data",error);
         throw error;

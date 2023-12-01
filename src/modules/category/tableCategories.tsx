@@ -1,5 +1,5 @@
 import * as React from "react";
-import IconButton from "@mui/material/IconButton";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,16 +7,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { ICategories } from "./type";
 import { Stack } from "@mui/material";
 import EditCategory from "./editCategory";
+import DeleteCategory from "./deleteCategory";
 export default function TableCategory() {
   const dispatch = useAppDispatch();
 
   const categories = useAppSelector((state) => state.category.categories);
-  console.log(categories);
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -49,10 +49,7 @@ export default function TableCategory() {
 
                   <TableCell className="text-base">
                     <Stack direction="row" className="mx-auto">
-                      <IconButton aria-label="delete" className="text-red-500">
-                        <DeleteIcon />
-                      </IconButton>
-
+                      <DeleteCategory data={category} />
                       <EditCategory data={category} />
                     </Stack>
                   </TableCell>

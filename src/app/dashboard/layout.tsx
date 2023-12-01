@@ -18,7 +18,7 @@ export default function DashboardLayout({
       <body className={inter.className}>
         <Providers>
           <Grid container className=" min-h-screen">
-            <Grid item className="slidebar bg-red-300" xs={2}>
+            <Grid item className="slidebar" xs={2}>
               <Slidebar />
             </Grid>
             <Grid item className="content" xs={10}>

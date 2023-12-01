@@ -12,6 +12,9 @@ import {
   IconButton,
   Divider,
   Stack,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 //
 import { CustomInput } from "@/customForm";
@@ -31,7 +34,7 @@ const rulesCategoryPerent = {
 const AddCategory = () => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [openDialogMessage, setOpenDialogMessage] = useState<boolean>(false);
-
+  const [openAlertMessage, setOpenAlertMessage] = React.useState(false);
   const dispatch = useAppDispatch();
 
   // react hook form
@@ -81,6 +84,7 @@ const AddCategory = () => {
   const onSubmit = async (data: any) => {
     dispatch(addNewCategogy(data));
     reset();
+    setOpenAlertMessage(true);
   };
   return (
     <>
@@ -157,6 +161,21 @@ const AddCategory = () => {
         setOpenDrawer={setOpenDrawer}
         reset={reset}
       />
+      <Snackbar
+        open={openAlertMessage}
+        autoHideDuration={6000}
+        onClose={() => setOpenAlertMessage(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+      >
+        <Alert
+          onClose={() => setOpenAlertMessage(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          <AlertTitle>Success</AlertTitle>
+          Add a new product success
+        </Alert>
+      </Snackbar>
     </>
   );
 };

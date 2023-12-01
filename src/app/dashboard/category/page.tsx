@@ -13,7 +13,7 @@ const CategoryPage: React.FC = () => {
   }, []);
   return (
     <>
-      <Grid container className="mt-10 px-4 ">
+      <Grid container className="mt-10 px-4 relative">
         <Grid item xs={12} className="header mb-1">
           <HeaderCategories />
         </Grid>
