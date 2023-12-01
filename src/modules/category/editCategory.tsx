@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useForm, useFormState } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -16,7 +16,7 @@ import {
 //
 import { CustomInput } from "@/customForm";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addNewCategogy } from "./categorySlice";
+import { updateCategory } from "./categorySlice";
 import { ICategories } from "./type";
 import DialogMessage from "@/components/dashboard/dialogMessage";
 const rulesCategoryPerent = {
@@ -30,11 +30,11 @@ const rulesCategoryPerent = {
 interface IEditCategory {
   data: ICategories;
 }
+
 const EditCategory = ({ data }: IEditCategory) => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [openDialogMessage, setOpenDialogMessage] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-
   // react hook form
 
   const {
@@ -42,6 +42,7 @@ const EditCategory = ({ data }: IEditCategory) => {
     control,
     reset,
     getValues,
+    resetField,
     formState: { errors },
     clearErrors,
   } = useForm({
@@ -78,11 +79,17 @@ const EditCategory = ({ data }: IEditCategory) => {
     }
   };
   // handle submit
-  const onSubmit = async (data: any) => {
-    // dispatch(addNewCategogy(data));
-    console.log(data);
-    reset();
+  const onSubmit = async (data: ICategories) => {
+    dispatch(updateCategory(data));
+    resetField("name_category");
+    setOpenDrawer(false);
   };
+  const category = useAppSelector((state) => {
+    const indexCategory = state.category.categories.findIndex(
+      (category) => category.id_category === data.id_category
+    );
+    return state.category.categories[indexCategory];
+  });
   // handle onclick
   const handleOnclick = () => {
     setOpenDrawer(true);

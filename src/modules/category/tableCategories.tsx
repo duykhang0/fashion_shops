@@ -16,7 +16,7 @@ export default function TableCategory() {
   const dispatch = useAppDispatch();
 
   const categories = useAppSelector((state) => state.category.categories);
-
+  console.log(categories);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

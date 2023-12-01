@@ -29,9 +29,13 @@ const categorySlice = createSlice({
             })
             
             .addCase(addNewCategogy.fulfilled,(state,actions) => {
-                console.log("state.categories",state.categories)
                 state.categories.push(actions.payload);
                 
+            }) 
+            .addCase(updateCategory.fulfilled,(state,actions) => {
+                const id_category = actions.payload.id_category
+                const indexCategory = state.categories.findIndex((category) => category.id_category === id_category)
+                state.categories[indexCategory] = actions.payload;  
             }) 
             
         }
@@ -50,7 +54,7 @@ export const fetchCategories = createAsyncThunk('category/fetchCategories',async
 })
 
 // add category
-export const  addNewCategogy = createAsyncThunk('category/addNewCategogy', async (newCategory:any,{rejectWithValue}) => {
+export const  addNewCategogy = createAsyncThunk('category/addNewCategogy', async (newCategory) => {
    
     try{
         const response = await fetch("http://localhost:8080/fakestoreapi.com/category",{
@@ -61,6 +65,25 @@ export const  addNewCategogy = createAsyncThunk('category/addNewCategogy', async
         
         const data = await response.json();
         return data;    
+    }catch(error){
+        console.log("Error submitting data",error);
+        throw error;
+    }
+});
+
+// Update Category by id 
+export const updateCategory = createAsyncThunk('category/updateCategoryById', async (dataUpdate:ICategories) => {
+    const {id_category} = dataUpdate;
+    
+    try{
+        const response = await fetch(`http://localhost:8080/fakestoreapi.com/category/${id_category}`,{
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(dataUpdate)
+        })
+        const data = await response.json();
+        return data;
+        
     }catch(error){
         console.log("Error submitting data",error);
         throw error;
