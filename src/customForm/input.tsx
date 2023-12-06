@@ -1,12 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { Button, TextField } from "@mui/material";
-interface IInputProps {
-  name: string;
-  label: string;
-  control: any;
-  placeholder?: string;
-  rules?: {};
-}
+import { IInputProps } from "./types";
+
 const CustomInput = (props: IInputProps) => {
   const { name, label, control, placeholder, rules } = props;
   return (
@@ -25,12 +20,9 @@ const CustomInput = (props: IInputProps) => {
               className="w-full mt-3"
               onChange={onChange}
               value={value}
+              helperText={error ? error.message : null}
+              error={!!error}
             />
-            {error ? (
-              <p className="text-red-500 text-sm ml-3">{error.message}</p>
-            ) : (
-              ""
-            )}
           </>
         );
       }}

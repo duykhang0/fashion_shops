@@ -23,7 +23,7 @@ import { addNewCategogy } from "./categorySlice";
 import { ICategories } from "./type";
 import { error } from "console";
 import DialogMessage from "@/components/dashboard/dialogMessage";
-const rulesCategoryPerent = {
+const rulesCategoryParent = {
   required: "Categorty does not empty !",
   minLength: {
     value: 8,
@@ -43,7 +43,6 @@ const AddCategory = () => {
     handleSubmit,
     control,
     reset,
-    resetField,
     getValues,
     formState: { errors },
     clearErrors,
@@ -64,8 +63,8 @@ const AddCategory = () => {
   };
 
   const toggleDrawer = (
-    event: React.KeyboardEvent | React.MouseEvent,
-    open: boolean
+    open: boolean,
+    event?: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
       event &&
@@ -81,7 +80,7 @@ const AddCategory = () => {
     }
   };
   // handle submit
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ICategories) => {
     dispatch(addNewCategogy(data));
     reset();
     setOpenAlertMessage(true);
@@ -92,7 +91,7 @@ const AddCategory = () => {
         variant="contained"
         startIcon={<AddIcon />}
         className="bg-green-600 hover:bg-green-700"
-        onClick={(event) => toggleDrawer(event, true)}
+        onClick={(event) => toggleDrawer(true, event)}
       >
         ADD
       </Button>
@@ -100,8 +99,8 @@ const AddCategory = () => {
       <Drawer
         anchor="right"
         open={openDrawer}
-        onClose={(event) => toggleDrawer(event, false)}
-        onKeyDown={(event) => toggleDrawer(event, false)}
+        onClose={() => toggleDrawer(false)}
+        onKeyDown={(event) => toggleDrawer(false, event)}
       >
         <Card
           sx={{
@@ -117,7 +116,7 @@ const AddCategory = () => {
             action={
               <IconButton
                 aria-label="close"
-                onClick={(event) => toggleDrawer(event, false)}
+                onClick={(event) => toggleDrawer(false, event)}
               >
                 <CloseIcon />
               </IconButton>
@@ -133,7 +132,7 @@ const AddCategory = () => {
                 name="name_category"
                 label="Category"
                 placeholder="Enter Category"
-                rules={rulesCategoryPerent}
+                rules={rulesCategoryParent}
               />
               {/* <CustomInput
                 control={control}

@@ -59,7 +59,7 @@ export const fetchCategories = createAsyncThunk('category/fetchCategories',async
 })
 
 // add category
-export const  addNewCategogy = createAsyncThunk('category/addNewCategogy', async (newCategory) => {
+export const  addNewCategogy = createAsyncThunk('category/addNewCategogy', async (newCategory:ICategories) => {
    
     try{
         const response = await fetch("http://localhost:8080/fakestoreapi.com/category",{

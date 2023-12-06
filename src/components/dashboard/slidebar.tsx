@@ -21,28 +21,23 @@ const Slidebar = () => {
       </Box>
       <Divider className="border-t-1 border-gray-700" />
       <MenuList>
-        <MenuItem>
-          <ListItemIcon>
-            <ContentCut fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>
-            <Link href="/dashboard/product">Product</Link>
-          </ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <ContentCopy fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>
-            <Link href="/dashboard/category">Category</Link>
-          </ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <ContentPaste fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Paste</ListItemText>
-        </MenuItem>
+        <Link href="/dashboard/product">
+          <MenuItem>
+            <ListItemIcon>
+              <ContentCut fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Product</ListItemText>
+          </MenuItem>
+        </Link>
+        <Link href="/dashboard/category">
+          <MenuItem>
+            <ListItemIcon>
+              <ContentCopy fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Category</ListItemText>
+          </MenuItem>
+        </Link>
+
         <Divider />
       </MenuList>
     </Paper>

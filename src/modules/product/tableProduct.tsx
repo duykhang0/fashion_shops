@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import useProduct from "@/hooks/useProduct";
-
+import { formatCurrency } from "@/util";
 interface IProduct {
   id_product: number;
   name: string;
@@ -59,7 +59,9 @@ const TableProduct = () => {
                     {product.id_product}
                   </TableCell>
                   <TableCell className="text-base">{product.name}</TableCell>
-                  <TableCell className="text-base">{product.price}</TableCell>
+                  <TableCell className="text-base">
+                    {formatCurrency(parseInt(product.price))}
+                  </TableCell>
                   <TableCell className="text-base"></TableCell>
                 </TableRow>
               );
