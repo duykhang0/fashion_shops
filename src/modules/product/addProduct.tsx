@@ -18,6 +18,7 @@ import {
   CustomSelect,
   InputCurrency,
   TextAreaCustom,
+  UploadDetailImage,
   UploadImage,
 } from "@/customForm";
 import { IProduct } from "./types";
@@ -119,6 +120,9 @@ const AddProduct = () => {
                   name="main_image"
                   label="Main Image"
                 />
+
+                {/* upload detail image */}
+                <UploadDetailImage name="detail_images" control={control} />
               </Stack>
 
               <Stack>

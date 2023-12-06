@@ -3,7 +3,7 @@ import CustomSelect from "./select";
 import InputCurrency from "./inputCurrency";
 import TextAreaCustom from "./textArea";
 import UploadImage from "./uploadImage";
-
+import UploadDetailImage from "./uploadDetailImage";
 //
 export {
   CustomInput,
@@ -11,4 +11,5 @@ export {
   InputCurrency,
   TextAreaCustom,
   UploadImage,
+  UploadDetailImage,
 };
