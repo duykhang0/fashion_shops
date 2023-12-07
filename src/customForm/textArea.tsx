@@ -12,7 +12,7 @@ const TextAreaCustom = (props: ITextAreaProps) => {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange } }) => {
+      render={({ field: { onChange, value } }) => {
         return (
           <FormControl>
             <FormLabel>{label}</FormLabel>
@@ -20,6 +20,7 @@ const TextAreaCustom = (props: ITextAreaProps) => {
               placeholder={placeholder}
               minRows={2}
               onChange={onChange}
+              value={value}
             />
           </FormControl>
         );

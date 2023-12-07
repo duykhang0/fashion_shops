@@ -22,32 +22,55 @@ import {
   UploadImage,
 } from "@/customForm";
 import { IProduct } from "./types";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { addProduct } from "./productSlice";
 import * as rules from "./rules";
-
+import { ICategories } from "../category/type";
+import { isCheckForm } from "@/util";
+import DialogMessage from "@/components/dashboard/dialogMessage";
 const AddProduct = () => {
+  const dispatch = useAppDispatch();
+  // state open drawer
   const [openDrawer, setOpenDrawer] = React.useState<boolean>(false);
+  // state open message
+  const [openMessage, setOpenMessage] = React.useState<boolean>(false);
   const categories = useAppSelector((state) => state.category.categories);
 
-  const toggleDrawer = (open: boolean, event?: React.MouseEvent) => {
-    setOpenDrawer(open);
-  };
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
+    clearErrors,
+    getValues,
   } = useForm({
     defaultValues: {
       name_product: "",
-      price: null,
-      description: "",
+      price: "",
+      product_description: "",
       main_image: "",
       detail_images: [],
-      category: [],
+      categories: [],
     },
   });
+
+  //set open or close Drawer
+  const toggleDrawer = (
+    open: boolean,
+    event?: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event &&
+      (("key" in event && event.key === "Escape") ||
+        ("type" in event && event.type === "click"))
+    ) {
+      setOpenDrawer(open);
+      clearErrors();
+    }
+  };
   const onSubmit = async (data: IProduct) => {
-    console.log("🚀 ~ file: addProduct.tsx:24 ~ data:", data);
+    dispatch(addProduct(data));
+    reset();
   };
 
   return (
@@ -56,11 +79,16 @@ const AddProduct = () => {
         variant="contained"
         startIcon={<AddIcon />}
         style={{ backgroundColor: "green" }}
-        onClick={() => toggleDrawer(true)}
+        onClick={(event) => toggleDrawer(true, event)}
       >
         ADD
       </Button>
-      <Drawer anchor="right" open={true} onClose={() => toggleDrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={openDrawer}
+        onClose={() => toggleDrawer(false)}
+        onKeyDown={(event) => toggleDrawer(false, event)}
+      >
         <Card
           sx={{
             height: "100vh",
@@ -77,7 +105,7 @@ const AddProduct = () => {
             action={
               <IconButton
                 aria-label="settings"
-                onClick={() => toggleDrawer(false)}
+                onClick={(event) => toggleDrawer(false, event)}
               >
                 <CloseIcon />
               </IconButton>
@@ -102,7 +130,7 @@ const AddProduct = () => {
                   datas={categories}
                   label="Category"
                   placeholder="Input category..."
-                  name="category"
+                  name="categories"
                   rules={rules.ruleCategorySelect}
                 />
                 {/* Input currency */}
@@ -112,7 +140,7 @@ const AddProduct = () => {
                   label="Product Description"
                   placeholder="Enter description ..."
                   control={control}
-                  name="description"
+                  name="product_description"
                 />
                 {/* upload main image */}
                 <UploadImage
@@ -139,6 +167,12 @@ const AddProduct = () => {
           </CardContent>
         </Card>
       </Drawer>
+      <DialogMessage
+        openDialogMessage={openMessage}
+        reset={reset}
+        setOpenDialogMessage={setOpenMessage}
+        setOpenDrawer={openDrawer}
+      />
     </>
   );
 };

@@ -5,10 +5,14 @@ import TableProduct from "@/modules/product/tableProduct";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { fetchCategories } from "@/modules/category/categorySlice";
+import { fetchProducts } from "@/modules/product/productSlice";
 const HomePage = () => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {}, [dispatch(fetchCategories())]);
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchProducts());
+  }, []);
   return (
     <>
       <Grid container className="mt-10 px-4 ">

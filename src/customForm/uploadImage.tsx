@@ -36,7 +36,7 @@ const UploadImage = (props: IUploadImage) => {
                 <CardMedia
                   component="img"
                   alt="green iguana"
-                  image={image}
+                  image={value}
                   className="w-36 mx-auto"
                 />
 

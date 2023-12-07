@@ -36,6 +36,7 @@ const InputCurrency = (props: IInputCurrency) => {
               label={label}
               onChange={onChange}
               error={!!error}
+              value={value}
             />
             {error ? (
               <span className="text-red-500 text-xs mt-1 ml-4">

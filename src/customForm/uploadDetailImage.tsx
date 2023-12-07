@@ -46,7 +46,7 @@ const UploadDetailImage = (props: IUploadDetailImage) => {
                 gap={1}
                 cols={3}
               >
-                {listImage.map((item, index) => {
+                {value.map((item: string, index: number) => {
                   return (
                     <ImageListItem key={"item" + index}>
                       <img src={item} loading="lazy" />

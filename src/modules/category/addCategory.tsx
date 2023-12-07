@@ -21,7 +21,7 @@ import { CustomInput } from "@/customForm";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addNewCategogy } from "./categorySlice";
 import { ICategories } from "./type";
-import { error } from "console";
+import { isCheckForm } from "@/util";
 import DialogMessage from "@/components/dashboard/dialogMessage";
 const rulesCategoryParent = {
   required: "Categorty does not empty !",
@@ -50,18 +50,6 @@ const AddCategory = () => {
     defaultValues: { name_category: "" },
   });
 
-  // check form value
-  const isCheckForm = () => {
-    //check value of form
-    const isCheckValueForm = Object.values(getValues()).some(
-      (value) => value !== null && value !== undefined && value !== ""
-    );
-    //check error of form
-    const isCheckError = Object.keys(errors).length !== 0;
-    const check = isCheckError || isCheckValueForm;
-    return check;
-  };
-
   const toggleDrawer = (
     open: boolean,
     event?: React.KeyboardEvent | React.MouseEvent
@@ -71,7 +59,7 @@ const AddCategory = () => {
       (("key" in event && event.key === "Escape") ||
         ("type" in event && event.type === "click"))
     ) {
-      if (isCheckForm()) {
+      if (isCheckForm(getValues, errors)) {
         setOpenDialogMessage(true);
       } else {
         setOpenDrawer(open);

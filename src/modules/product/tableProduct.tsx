@@ -6,31 +6,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import useProduct from "@/hooks/useProduct";
+
+//
+
+import { useAppSelector } from "@/redux/hooks";
+import { IProduct } from "./types";
 import { formatCurrency } from "@/util";
-interface IProduct {
-  id_product: number;
-  name: string;
-  price: string;
-  description: string;
-  main_image: string;
-}
 
 const TableProduct = () => {
-  const [dataProducts, setDataProducts] = React.useState<IProduct[]>([]);
-  React.useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const rawDataProduct = await useProduct();
-        if (rawDataProduct) {
-          setDataProducts(rawDataProduct);
-        }
-      } catch (error) {
-        console.error("Error fetching categories", error);
-      }
-    };
-    fetchProduct();
-  }, []);
+  // const [dataProducts, setDataProducts] = React.useState<IProduct[]>([]);
+  const dataProducts = useAppSelector((state) => state.products.products);
 
   return (
     <TableContainer component={Paper}>
@@ -44,6 +29,11 @@ const TableProduct = () => {
               Product Name
             </TableCell>
             <TableCell className="text-base font-semibold">Price</TableCell>
+            <TableCell className="text-base font-semibold">
+              Description
+            </TableCell>
+            <TableCell className="text-base font-semibold">Category</TableCell>
+
             <TableCell className="text-base font-semibold">Action</TableCell>
           </TableRow>
         </TableHead>
@@ -58,9 +48,17 @@ const TableProduct = () => {
                   <TableCell scope="row" className="text-base">
                     {product.id_product}
                   </TableCell>
-                  <TableCell className="text-base">{product.name}</TableCell>
+                  <TableCell className="text-base">
+                    {product.name_product}
+                  </TableCell>
                   <TableCell className="text-base">
                     {formatCurrency(parseInt(product.price))}
+                  </TableCell>
+                  <TableCell className="text-base">
+                    {product.product_description}
+                  </TableCell>
+                  <TableCell className="text-base">
+                    {product.categories?.toString()}
                   </TableCell>
                   <TableCell className="text-base"></TableCell>
                 </TableRow>
